@@ -860,24 +860,30 @@ html, body{
 /* CORAZONES ELEGANTES */
 .corazon-xat {
     position: fixed;
-    font-size: 16px;
+    font-size: 26px;              /* ❤️ más grande */
     color: #fa999f;
-    animation: corazonFlotar 3.5s ease-out forwards;
     pointer-events: none;
     z-index: 999999;
-    text-shadow: 0 0 6px rgba(219, 87, 87, 0.6);
+
+    text-shadow: 
+      0 0 6px rgba(219, 87, 87, 0.6),
+      0 0 14px rgba(255, 170, 180, 0.6);
+
+    animation: corazonFlotar 2.6s ease-out forwards;
 }
 
+/* 🔥 animación manteniendo el centrado */
 @keyframes corazonFlotar {
     0% {
-        transform: translateY(0) scale(1);
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
     }
     100% {
-        transform: translateY(-120px) scale(1.4);
+        transform: translate(-50%, -170%) scale(1.4);
         opacity: 0;
     }
 }
+
 
 
 html, body, a, div, span, p, img, button, input, textarea, select, * {
@@ -924,12 +930,12 @@ html, body, a, div, span, p, img, button, input, textarea, select, * {
 
     <!-- BOTONES -->
     <div class="menu-left">
-      <a href="https://www.flickr.com/photos/jefaa/albums/" target="_blank">♡︎FondosᲦ</a>
-      <a href="https://xat.me/elizabbeth" target="_blank">♡︎GifsᲦ</a>
-      <a href="#" onclick="abrirGaleria(); return false;">♡︎GaleriaᲦ</a>
+      <a href="https://xat.me/elizabbeth" target="_blank">♥Gifs♥</a>
+      <a href="https://www.flickr.com/photos/jefaa/albums/" target="_blank">♥Fondos♥</a>
+      <a href="#" onclick="abrirGaleria(); return false;">♥Galeria♥</a>
 
       <div class="btn-player">
-        <a href="#" onclick="togglePlayer(); return false;">♡︎MusicaᲦ</a>
+        <a href="#" onclick="togglePlayer(); return false;">♥Musica♥</a>
 
         <div class="player-drop" id="playerDrop">
           <div class="player-glass">
@@ -972,7 +978,7 @@ html, body, a, div, span, p, img, button, input, textarea, select, * {
         <img src="https://i.ibb.co/39QdDtp4/rcv3f-cthke.gif">
       </div>
 
-      <div class="footer">✦ XatSpace · Design Fabricio ✦</div>
+      <div class="footer">✦By Fabricio ✦</div>
     </div>
 
     <!-- MODAL GALERIA -->
@@ -1216,19 +1222,27 @@ document.addEventListener('mousemove', spawnSparkle);
 window.addEventListener("message", spawnSparkle);
 
 
-document.addEventListener("mousemove", function(e) {
-    let corazon = document.createElement("div");
-    corazon.className = "corazon-xat";
-    corazon.innerHTML = "❤";
-    corazon.style.left = (e.clientX + 5) + "px";
-    corazon.style.top = (e.clientY + 5) + "px";
+let lastSpawn = 0;
 
-    document.body.appendChild(corazon);
+document.addEventListener("mousemove", (e) => {
+  const now = Date.now();
 
-    setTimeout(() => {
-        corazon.remove();
-    }, 3500);
+  // 👇 limita la cantidad (más suave y preciso)
+  if (now - lastSpawn < 35) return;
+  lastSpawn = now;
+
+  const corazon = document.createElement("div");
+  corazon.className = "corazon-xat";
+  corazon.textContent = "❤";
+
+  corazon.style.left = e.clientX + "px";
+  corazon.style.top  = e.clientY + "px";
+
+  document.body.appendChild(corazon);
+
+  setTimeout(() => corazon.remove(), 2600);
 });
+
 
 </script>
 

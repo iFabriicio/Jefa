@@ -203,40 +203,33 @@ html, body, a, div, span, p, img, button, input, textarea, select, * {
     cursor: none !important;
 }
 
-#cursor-corazon {
+/* ❤️ CORAZÓN CURSOR – GALERÍA (IGUAL AL PRINCIPAL) */
+.corazon-xat {
     position: fixed;
+    font-size: 26px;              /* mismo tamaño */
+    color: #fa999f;
     pointer-events: none;
     z-index: 9999999;
-    transform: translate(-50%, -50%);
+
+    text-shadow:
+      0 0 6px rgba(219, 87, 87, 0.6),
+      0 0 14px rgba(255, 170, 180, 0.6);
+
+    animation: corazonFlotar 2.6s ease-out forwards;
 }
 
-#cursor-corazon::before {
-    content: "❤";
-    font-size: 24px;
-    color: #fa999f;
-    text-shadow: 0 0 6px rgba(219, 87, 87, 0.6);
-}
-
-.corazon {
-    position: fixed;
-    pointer-events: none;
-    z-index: 2147483647;
-    font-size: 16px;
-    color: #fa999f;
-    animation: flotar 3.5s ease-out forwards;
-    text-shadow: 0 0 6px rgba(219, 87, 87, 0.6);
-}
-
-@keyframes flotar {
+/* 🔥 animación idéntica */
+@keyframes corazonFlotar {
     0% {
-        transform: translateY(0) scale(1);
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
     }
     100% {
-        transform: translateY(-120px) scale(1.5);
+        transform: translate(-50%, -170%) scale(1.4);
         opacity: 0;
     }
 }
+
 
 </style>
 </head>
@@ -247,7 +240,7 @@ html, body, a, div, span, p, img, button, input, textarea, select, * {
 <div class="gallery-box">
 
  <div class="gallery-header">
-  <span>⭐︎ɢᴀʟᴇʀɪᴀ⭐︎</span>
+  <span>♥ 𝑮𝒂𝒍𝒆𝒓𝒊𝒂 ♥ </span>
 </div>
   <div class="slider" id="slider">
 
@@ -309,26 +302,27 @@ document.addEventListener('dragstart', function(e){
 });
 
 
-document.addEventListener("mousemove", function(e){
+let lastSpawn = 0;
 
-    // cursor
-    const c = document.getElementById("cursor-corazon");
-    c.style.left = e.clientX + "px";
-    c.style.top  = e.clientY + "px";
+document.addEventListener("mousemove", (e) => {
+  const now = Date.now();
 
-    // efecto corazón
-    const heart = document.createElement("div");
-    heart.className = "corazon";
-    heart.innerHTML = "❤";
-    heart.style.left = e.clientX + "px";
-    heart.style.top  = e.clientY + "px";
+  // 🎯 control de cantidad (suave y preciso)
+  if (now - lastSpawn < 35) return;
+  lastSpawn = now;
 
-    document.body.appendChild(heart);
+  const heart = document.createElement("div");
+  heart.className = "corazon-xat";
+  heart.textContent = "❤";
 
-    setTimeout(() => {
-        heart.remove();
-    }, 3500);
+  heart.style.left = e.clientX + "px";
+  heart.style.top  = e.clientY + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 2600);
 });
+
 
 </script>
 
