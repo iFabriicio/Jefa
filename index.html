@@ -478,8 +478,8 @@ img{
   /* FONDO MÁS SÓLIDO */
   background: linear-gradient(
     145deg,
-    #ffd6e1,
-    #f4a8b8
+    #fdfdfd,
+    #fcfcfc
   );
 
   border:2px solid #fff;
@@ -489,7 +489,7 @@ img{
     inset 0 0 6px rgba(255,255,255,.8);
 
   z-index:10;
-  cursor:pointer;
+  cursor: pointer;
   transition:.25s ease;
 }
 
@@ -528,8 +528,8 @@ img{
 /* icono fuera del círculo */
 .home-icon{
   position:absolute;
-  width:20px;
-  height:20px;
+  width:30px;
+  height:30px;
   border-radius:50%;
 
   top:150px;
@@ -545,8 +545,8 @@ img{
 }
 
 .home-icon img{
-  width:35px;      /* tamaño del icono */
-  height:35px;
+  width:20px;      /* tamaño del icono */
+  height:20px;
   pointer-events:none;
 }
 
@@ -857,32 +857,6 @@ html, body{
   pointer-events: auto !important;
 }
 
-/* CORAZONES ELEGANTES */
-.corazon-xat {
-    position: fixed;
-    font-size: 26px;              /* ❤️ más grande */
-    color: #fa999f;
-    pointer-events: none;
-    z-index: 999999;
-
-    text-shadow: 
-      0 0 6px rgba(219, 87, 87, 0.6),
-      0 0 14px rgba(255, 170, 180, 0.6);
-
-    animation: corazonFlotar 2.6s ease-out forwards;
-}
-
-/* 🔥 animación manteniendo el centrado */
-@keyframes corazonFlotar {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, -170%) scale(1.4);
-        opacity: 0;
-    }
-}
 
 
 
@@ -1064,6 +1038,27 @@ html, body, a, div, span, p, img, button, input, textarea, select, * {
 .modal-overlay .nav.prev{ left:18px; }
 .modal-overlay .nav.next{ right:18px; }
 
+/* ===============================
+   💗 CURSOR JEFA EXACTO
+================================ */
+
+#cursorJefaExacto{
+  position:fixed !important;
+  left:0;
+  top:0;
+
+  width:80px;   /* 🔥 más grande para ver flecha + corazones */
+  height:auto;
+
+  pointer-events:none;
+
+  z-index:9999999999;
+
+  object-fit:contain;
+  overflow:visible !important;
+}
+
+
 </style>
 </head>
 
@@ -1128,7 +1123,7 @@ html, body, a, div, span, p, img, button, input, textarea, select, * {
         </div>
 
         <a href="https://xat.com/fondos" target="_blank" class="home-icon">
-          <img src="https://xatimg.com/image/BggQTpqmKLQi.png">
+          <img src="https://xat.com/content/web/R00235/img/navbar/home.svg">
         </a>
       </div>
 
@@ -1136,7 +1131,7 @@ html, body, a, div, span, p, img, button, input, textarea, select, * {
       <div class="subtitle">✧ Bienvenidos a mi xatspace ✧</div>
 
       <div class="bio" id="typingText">
-        Yo sabía que el vidrio cortaba, y decidí tomarlo con las dos manos!!
+        Yo sabía que el vidrio cortaba, y yo decidí tomarlo con las dos manos!!
       </div>
 
       <div class="firma">
@@ -1200,6 +1195,10 @@ html, body, a, div, span, p, img, button, input, textarea, select, * {
 
   </div>
 </div>
+
+<img id="cursorJefaExacto"
+src="https://xatimg.com/image/dURDSptxsGTy.png">
+
 
 <script>
 /* ===============================
@@ -1371,23 +1370,9 @@ function togglePlayer(){
   document.getElementById("playerDrop").classList.toggle("active");
 }
 
-/* ===============================
-   ✨ EFECTOS CURSOR (FIXED)
-================================ */
-let lastSpawn=0;
-document.addEventListener("mousemove",e=>{
-  const now=Date.now();
-  if(now-lastSpawn<35) return;
-  lastSpawn=now;
 
-  const c=document.createElement("div");
-  c.className="corazon-xat";
-  c.textContent="❤";
-  c.style.left=e.clientX+"px";
-  c.style.top=e.clientY+"px";
-  document.body.appendChild(c);
-  setTimeout(()=>c.remove(),2600);
-});
+
+
 
 /* ===============================
    🚪 INTRO
@@ -1410,6 +1395,33 @@ function enterSite(){
 ["contextmenu","selectstart","dragstart"].forEach(ev=>{
   document.addEventListener(ev,e=>e.preventDefault());
 });
+
+/* ===============================
+   💗 CURSOR JEFA EXACTO (FIX REAL)
+================================ */
+
+const cursor = document.getElementById("cursorJefaExacto");
+
+/*
+  IMPORTANTE:
+
+  Estos valores ajustan dónde está la punta REAL
+  dentro del PNG.
+
+  🔥 Si quieres moverlo milimétricamente:
+  cambia offsetX y offsetY.
+*/
+
+const offsetX = 20;   // mover izquierda/derecha
+const offsetY = 10;   // mover arriba/abajo
+
+document.addEventListener("mousemove", (e) => {
+
+  cursor.style.transform =
+    `translate(${e.clientX - offsetX}px, ${e.clientY - offsetY}px)`;
+
+});
+
 </script>
 
 </body>
